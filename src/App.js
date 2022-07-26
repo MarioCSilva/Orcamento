@@ -76,7 +76,7 @@ function App () {
                   Orçamento Zero ?
                 </h6>
                 <h6 id={theme}>
-                  {data['Rendimentos']['total']} € - {totalSpent} € = <span style={{background: '#0d6efd', paddingLeft:3, paddingRight:3, borderRadius: '5%', fontWeight: 'bold'}}>{data['Rendimentos']['total'] - totalSpent} €</span>
+                  {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{background: '#0d6efd', paddingLeft:3, paddingRight:3, borderRadius: '5%', fontWeight: 'bold'}}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
                 </h6>
               </Col>
             </Row>

@@ -63,7 +63,7 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
                   <td style={{textAlign: 'right'}}>
                     Total
                   </td>
-                  <td style={{textAlign: 'right', width: 150, fontWeight: 'bold'}}>{data[id] ? data[id]['total'] : 0} €</td>
+                  <td style={{textAlign: 'right', width: 150, fontWeight: 'bold'}}>{data[id] ? data[id]['total'].toFixed(2) : 0} €</td>
                 </tr>
             </tbody>
           </Table>
