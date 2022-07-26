@@ -50,16 +50,16 @@ function App () {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="App" style={{ width: '100%', paddingTop: 20 }} id={theme}>
+      <div className="App" style={{ width: '100%', paddingTop: 20, overflowX: 'hidden' }} id={theme}>
         <header className="App-header">
-          <div style={{ position: 'absolute', top: 25, right: '10rem' }}>
-            <DarkModeSwitch
-              checked={isDarkMode}
-              onChange={toggleTheme}
-              size={40}
-            />
-          </div>
-          <h1 id={theme} style={{ fontWeight: 'bold'}}>Orçamento</h1>
+            <h1 id={theme} style={{ fontWeight: 'bold', flex: "1", width: '100%'}}>Orçamento</h1>
+            <div style={{ position: 'absolute', top: 18, right: 20 }}>
+              <DarkModeSwitch
+                checked={isDarkMode}
+                onChange={toggleTheme}
+                size={40}
+              />
+            </div>
           <Container>
             <Row style={{ paddingTop: 10 }}>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
@@ -76,7 +76,7 @@ function App () {
                   Orçamento Zero ?
                 </h6>
                 <h6 id={theme}>
-                  {data['Rendimentos']['total']} € - {totalSpent} € = <span style={{background: '#0d6efd', padding:3, borderRadius: '10%', fontWeight: 'bold'}}>{data['Rendimentos']['total'] - totalSpent} €</span>
+                  {data['Rendimentos']['total']} € - {totalSpent} € = <span style={{background: '#0d6efd', paddingLeft:3, paddingRight:3, borderRadius: '5%', fontWeight: 'bold'}}>{data['Rendimentos']['total'] - totalSpent} €</span>
                 </h6>
               </Col>
             </Row>

@@ -46,8 +46,9 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
                     <td key={index} style={{textAlign: 'left'}}>
                       {option}
                     </td>
-                    <td style={{textAlign: 'right', width: 150}}>
+                    <td style={{textAlign: 'right', width: 120}}>
                       <InputNumber
+                        style={{width: 100}}
                         min={0}
                         max={1000000000000}
                         value={data[id] ? data[id]['values'][index] : 0}
