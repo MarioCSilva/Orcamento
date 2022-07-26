@@ -81,16 +81,16 @@ function App () {
               </Col>
             </Row>
             <Row>
-              <Col xs="12" sm="12" md="4" lg="3" style={{ minWidth: 290, paddingTop: 20 }}>
+              <Col xs="12" sm="12" md="4" lg="3" style={{ paddingTop: 20 }}>
                 <BasicCard id="Casa" cardTitle="Casa" cardTable={["Renda / Empréstimo", "Água", "Luz", "Gás", "Internet", "Telefone", "Telemóvel", "TV por cabo", "Condomínio", "Seguros", "IMI"]} />
               </Col>
-              <Col xs="12" sm="12" md="4" lg="3" style={{ minWidth: 290, paddingTop: 20 }}>
+              <Col xs="12" sm="12" md="4" lg="3" style={{ paddingTop: 20 }}>
                 <BasicCard id="Familiar" cardTitle="Familiar" cardTable={["Alimentação / Higiene", "Despesas médicas", "Ginásio / atividades", "Educação / propinas", "Escola / creche", "Presentes (Aniversário; Natal)", "Vestuário e Acessórios", "Veterinário", "Despesas animais de estimação"]} />
               </Col>
-              <Col xs="12" sm="12" md="4" lg="3" style={{ minWidth: 290, paddingTop: 20 }}>
+              <Col xs="12" sm="12" md="4" lg="3" style={{ paddingTop: 20 }}>
                 <BasicCard id="Transportes" cardTitle="Transportes" cardTable={["Crédito Automóvel", "Combustível", "Seguros", "Manutenção mecânico", "IUC", "Passe Mensal", "Bilhete único (transp. públicos)", "Portagens", "Inspeção veículos"]} />
               </Col>
-              <Col xs="12" sm="12" md="4" lg="3" style={{ minWidth: 290, paddingTop: 20 }}>
+              <Col xs="12" sm="12" md="4" lg="3" style={{ paddingTop: 20 }}>
                 <BasicCard id="Extras" cardTitle="Extras" cardTable={["Dívidas (cartões de crédito)", "Crédito Pessoal", "Outros créditos", "Restaurantes / bares / cafés", "Subscrições", "Livros  e workshops", "Reparações / arranjos", "Utensílios", "Férias", "Multas"]} />
               </Col>
             </Row>

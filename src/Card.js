@@ -48,14 +48,14 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
                     </td>
                     <td style={{textAlign: 'right', width: 120}}>
                       <InputNumber
-                        style={{width: 100}}
+                        style={{width: 80}}
                         min={0}
                         max={1000000000000}
                         value={data[id] ? data[id]['values'][index] : 0}
                         step={1}
                         onChange={(value) => changeValue(index, value)}
                         enableMobileNumericKeyboard
-                      /> €
+                      />
                     </td>
                   </tr>
                 ))}
