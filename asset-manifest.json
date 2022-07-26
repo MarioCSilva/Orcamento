@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "Orcamento/static/css/main.b66cd37a.css",
-    "main.js": "Orcamento/static/js/main.eff6f5fb.js",
-    "static/js/787.27fb6eb7.chunk.js": "Orcamento/static/js/787.27fb6eb7.chunk.js",
+    "main.css": "/static/css/main.b66cd37a.css",
+    "main.js": "/static/js/main.eff6f5fb.js",
+    "static/js/787.27fb6eb7.chunk.js": "/static/js/787.27fb6eb7.chunk.js",
     "index.html": "/index.html",
-    "main.b66cd37a.css.map": "Orcamento/static/css/main.b66cd37a.css.map",
-    "main.eff6f5fb.js.map": "Orcamento/static/js/main.eff6f5fb.js.map",
-    "787.27fb6eb7.chunk.js.map": "Orcamento/static/js/787.27fb6eb7.chunk.js.map"
+    "main.b66cd37a.css.map": "/static/css/main.b66cd37a.css.map",
+    "main.eff6f5fb.js.map": "/static/js/main.eff6f5fb.js.map",
+    "787.27fb6eb7.chunk.js.map": "/static/js/787.27fb6eb7.chunk.js.map"
   },
   "entrypoints": [
-    "Orcamento/static/css/main.b66cd37a.css",
-    "Orcamento/static/js/main.eff6f5fb.js"
+    "static/css/main.b66cd37a.css",
+    "static/js/main.eff6f5fb.js"
   ]
 }
