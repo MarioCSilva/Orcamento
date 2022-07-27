@@ -18,7 +18,7 @@ var getTotal = function(dataVals, value) {
     0
   );
 
-  return (value / sum * 100).toFixed(2);
+  return (value / sum * 100).toFixed(0);
 };
 
 function App () {
