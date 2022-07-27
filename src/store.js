@@ -7,7 +7,8 @@ const colors = {
   'Casa': "#FFCE56",
   'Familiar': "#52D726",
   'Transportes': "#FF7300",
-  'Extras': "#47B39C"
+  'Extras': "#47B39C",
+  
 }
 
 

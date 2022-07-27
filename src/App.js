@@ -1,16 +1,25 @@
 import { createContext, useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
-import { PersistGate } from 'zustand-persist'
 import BasicCard from './Card.js';
 import valuesStore from './store.js'
-
+import "chartjs-plugin-datalabels";
 import 'chart.js/auto';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export const ThemeContext = createContext(null);
+
+var getTotal = function(dataVals, value) {
+  var sum = dataVals.datasets[0].data.reduce(
+    (a, b) => a + b,
+    0
+  );
+
+  return (value / sum * 100).toFixed(2);
+};
 
 function App () {
   const [dataVals, setDataVals] = useState(null);
@@ -24,6 +33,23 @@ function App () {
     valuesStore.getState().changeTheme(theme === "light" ? "dark" : "light");
   }
 
+  const chartOptions = {
+    cutout: '65%',
+    plugins: {
+      datalabels: {
+        color: "#212529",
+        font: {
+          weight: "bold",
+          size: 16
+        },
+        padding: 6,
+        formatter: (value) => {
+          return getTotal(dataVals, value) + "%";
+        }
+      }
+    },
+  }
+
   useEffect(() => {
     let newDataVals = {
       labels: [],
@@ -33,7 +59,9 @@ function App () {
           data: [],
           backgroundColor: [],
           hoverBackgroundColor: [],
-          borderWidth: 1
+          borderWidth: 0.5,
+          hoverBorderWidth: 4,
+          hoverOffset: 2
         }
       ]
     }
@@ -63,20 +91,22 @@ function App () {
           <Container>
             <Row style={{ paddingTop: 10 }}>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
-                <BasicCard id="Rendimentos" cardTitle="Rendimentos" background="linear-gradient(180deg, white 88%, rgb(54 162 235))" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
+                <BasicCard id="Rendimentos" cardTitle="Rendimentos" background="linear-gradient(180deg, white 87.5%, rgba(54,162,235,0.8))" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
               </Col>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
                 <BasicCard id="Património" cardTitle="Património" cardTable={["Investimentos", "Poupança", "Reserva de emergência"]} />
               </Col>
               <Col xs="12" sm="12" md="12" lg="4" style={{ paddingTop: 0, textAlign: "center" }}>
                 {dataVals &&
-                  <Pie data={dataVals} style={{ maxHeight: 356.5, textAlign: "center", paddingTop: 15 }} />
+                <>
+                  <Doughnut plugins={[ChartDataLabels]} options={chartOptions} data={dataVals} style={{ maxHeight: 356.5, textAlign: "center", paddingTop: 15}} />
+                </>
                 }
                 <h6 style={{paddingTop: 10}} id={theme}>
                   Orçamento Zero ?
                 </h6>
                 <h6 id={theme}>
-                  {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{background: '#0d6efd', paddingLeft:3, paddingRight:3, borderRadius: '5%', fontWeight: 'bold'}}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
+                  {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{background: '#0d6efdA0', paddingLeft:3, paddingRight:3, borderRadius: '5%', fontWeight: 'bold'}}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
                 </h6>
               </Col>
             </Row>
@@ -96,6 +126,7 @@ function App () {
             </Row>
           </Container>
           <hr />
+          <h2>By </h2>
         </header>
       </div>
     </ThemeContext.Provider>

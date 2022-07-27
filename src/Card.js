@@ -6,8 +6,6 @@ import valuesStore from './store.js'
 
 const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"] }) => {
   const [title, ] = useState(cardTitle);
-  const [num, setNum] = useState(0);  
-  const [total, setTotal] = useState(0);
   const [counts, setCounts] = useState([]);
   let data = valuesStore(state => state.data);
 
@@ -23,12 +21,7 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
     var copyArr = [...counts];
     copyArr[index] = value;
     setCounts(copyArr);
-    var sum = 0;
-    for (let i = 0; i < copyArr.length; i++) {
-      sum += parseFloat(copyArr[i]);
-    }
     valuesStore.getState().update(id, index, value)
-    setTotal(sum);
   }  
 
   return (
@@ -42,7 +35,7 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
           <tbody style={{fontSize: 14}}>
                 {cardTable.map((option, index) => (
                   
-                  <tr>
+                  <tr  key={index}>
                     <td key={index} style={{textAlign: 'left'}}>
                       {option}
                     </td>
