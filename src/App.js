@@ -171,7 +171,7 @@ function App() {
             </Row>
             <br />
             <div id={theme} style={{width: '100%'}}>
-              <h3>
+              <h4>
                 Capital após <InputNumber
                   style={{ width: 70, maxHeight: 38, borderRadius: '10%', textAlign: 'center', border: '2px solid black' }}
                   min={0}
@@ -189,10 +189,10 @@ function App() {
                   onChange={(value) => changeYears(value)}
                   enableMobileNumericKeyboard
                 /> {wordYears}:
-              </h3>
+              </h4>
               <Row>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h3>Ganho</h3>
+                  <h4>Ganho</h4>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -205,7 +205,7 @@ function App() {
                   />
                 </Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h3>Poupado</h3>
+                  <h4>Poupado</h4>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -218,7 +218,7 @@ function App() {
                   />
                 </Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h3>Investido</h3>
+                  <h4>Investido</h4>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -232,7 +232,7 @@ function App() {
                 </Col>
                 <Col xs="0" sm="0" md="2" lg="2" id="hideCol"></Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h3>Gasto</h3>
+                  <h4>Gasto</h4>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -246,7 +246,7 @@ function App() {
                 </Col>
                 <Col xs="0" sm="3" md="0" lg="0" id="showCol"></Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h3>De Emergência</h3>
+                  <h4>De Emergência</h4>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
