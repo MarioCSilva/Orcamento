@@ -192,7 +192,7 @@ function App() {
               </h4>
               <Row>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h4>Ganho</h4>
+                  <h5>Ganho</h5>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -205,7 +205,7 @@ function App() {
                   />
                 </Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h4>Poupado</h4>
+                  <h5>Poupado</h5>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -218,7 +218,7 @@ function App() {
                   />
                 </Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h4>Investido</h4>
+                  <h5>Investido</h5>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -232,7 +232,7 @@ function App() {
                 </Col>
                 <Col xs="0" sm="0" md="2" lg="2" id="hideCol"></Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h4>Gasto</h4>
+                  <h5>Gasto</h5>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
@@ -246,7 +246,7 @@ function App() {
                 </Col>
                 <Col xs="0" sm="3" md="0" lg="0" id="showCol"></Col>
                 <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h4>De Emergência</h4>
+                  <h5>De Emergência</h5>
                   <GaugeChart
                     colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
                       "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
