@@ -37,6 +37,22 @@
   color: white;
 }
 
+@media (max-width: 767px) {
+  #hideCol {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  #showCol {
+    display: none !important;
+  }
+}
+
+/* xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px */
+
+
+
 .App-link {
   color: #61dafb;
 }

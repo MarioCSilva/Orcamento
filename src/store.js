@@ -22,6 +22,13 @@ const valuesStore = create(
       data: { 'Rendimentos': { 'total': 0, 'values': new Array(6).fill(0), 'color': colors["Rendimentos"] }},
       theme: 'dark',
       totalSpent: 0,
+      years: 0,
+      months: 6,
+      won: 0,
+      savings: 0,
+      expenses: 0,
+      investments: 0,
+      emergency: 0,
       create: (id, len) => {
         const newData = { ...get().data }
         if (!(id in newData)) {
@@ -46,7 +53,29 @@ const valuesStore = create(
       },
       changeTheme: (newTheme) => {
         set((s) => ({...s, theme: newTheme}))
+      },
+      setYears: (value) => {
+        set((s) => ({...s, years: value}))
+      },
+      setMonths: (value) => {
+        set((s) => ({...s, months: value}))
+      },
+      setWon: (value) => {
+        set((s) => ({...s, won: value}))
+      },
+      setSavings: (value) => {
+        set((s) => ({...s, savings: value}))
+      },
+      setExpenses: (value) => {
+        set((s) => ({...s, expenses: value}))
+      },
+      setInvestments: (value) => {
+        set((s) => ({...s, investments: value}))
+      },
+      setEmergency: (value) => {
+        set((s) => ({...s, emergency: value}))
       }
+
     }),
   )
 );
