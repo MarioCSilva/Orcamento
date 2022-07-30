@@ -1,16 +1,18 @@
 import { createContext, useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Doughnut } from "react-chartjs-2";
+import { Pie, Bar } from "react-chartjs-2";
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import BasicCard from './Card.js';
 import valuesStore from './store.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import InputNumber from 'react-input-number';
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import InfoIcon from "@material-ui/icons/Info";
 import "chartjs-plugin-datalabels";
 import 'chart.js/auto';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import InputNumber from 'react-input-number';
-import GaugeChart from 'react-gauge-chart'
 
 export const ThemeContext = createContext(null);
 
@@ -25,42 +27,42 @@ var getTotal = function (dataVals, value) {
 
 function App() {
   const [dataVals, setDataVals] = useState(null);
+  const [capitalVals, setCapitalVals] = useState(null)
   const [wordMonths, setWordMonths] = useState("Meses");
   const [wordYears, setWordYears] = useState("Anos");
   const years = valuesStore(state => state.years);
   const months = valuesStore(state => state.months);
-  const won = valuesStore(state => state.won);
-  const savings = valuesStore(state => state.savings);
-  const expenses = valuesStore(state => state.expenses);
-  const investments = valuesStore(state => state.investments);
-  const emergency = valuesStore(state => state.emergency);
   const data = valuesStore(state => state.data);
   const totalSpent = valuesStore(state => state.totalSpent);
   const theme = valuesStore(state => state.theme);
   const [isDarkMode, setDarkMode] = useState(theme === "dark" ? true : false);
 
+
+  useEffect(()=>{
+    if (parseFloat(years) === parseFloat(1))
+      setWordYears("Ano")
+    else
+      setWordYears("Anos")
+
+  if (parseFloat(months) === parseFloat(1))
+      setWordMonths("Mês")
+    else
+      setWordMonths("Meses")
+
+  }, [years, months])
+
   const changeYears = (value) => {
     if (!value) {
       value = 0
     }
-    if (parseFloat(value) === parseFloat(1))
-      setWordYears("Ano")
-    else
-      setWordYears("Anos")
     valuesStore.getState().setYears(value)
   }
 
   const changeMonths = (value) => {
-    console.log(value)
     if (!value) {
       value = 0
     }
-    if (parseFloat(value) === parseFloat(1))
-      setWordMonths("Mês")
-    else
-      setWordMonths("Meses")
     valuesStore.getState().setMonths(value)
-    console.log(months)
   }
 
 
@@ -69,9 +71,14 @@ function App() {
     valuesStore.getState().changeTheme(theme === "light" ? "dark" : "light");
   }
 
-  const chartOptions = {
-    cutout: '65%',
+  const pieChartOptions = {
+    responsive: true,
     plugins: {
+      legend: {
+        labels: {
+          color: theme === 'light' ? 'black' : 'white'
+        }
+      },
       datalabels: {
         color: "white",
         font: {
@@ -86,14 +93,60 @@ function App() {
     },
   }
 
+  const barChartOptions = {
+    responsive: true,
+    scales: {
+      yAxes:{
+          ticks:{
+              color: theme === 'light' ? 'black' : 'white'
+          }
+      },
+      xAxes: {
+          ticks:{
+              color: theme === 'light' ? 'black' : 'white'
+          }
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        color: theme === 'light' ? 'black' : 'white',
+        font: {
+          weight: "bold",
+          size: 16
+        },
+        padding: 6,
+        formatter: (value) => {
+          return parseFloat(value).toFixed(0) + " €";
+        },
+      }
+    },
+  }
+
   useEffect(() => {
-    valuesStore.getState().setWon(data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years);
-    valuesStore.getState().setSavings(data['Património'].values[1] * months + data['Património'].values[1] * 12 * years);
+    var color = theme === 'light' ? 'black' : 'white';
+    var capital = [];
+    capital[0] = (data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years).toFixed(2);
     var expenses = data['Casa']['total'] + data['Familiar']['total'] + data['Transportes']['total'] + data['Extras']['total'];
-    valuesStore.getState().setExpenses(expenses * months + expenses * 12 * years);
-    valuesStore.getState().setInvestments(data['Património'].values[0] * months + data['Património'].values[0] * 12 * years);
-    valuesStore.getState().setEmergency(data['Património'].values[2] * months + data['Património'].values[2] * 12 * years);
-  }, [data, months, years])
+    capital[1] = (expenses * months + expenses * 12 * years).toFixed(2);
+    capital[2] = (data['Património'].values[0] * months + data['Património'].values[0] * 12 * years).toFixed(2);
+    capital[3] = (data['Património'].values[1] * months + data['Património'].values[1] * 12 * years).toFixed(2);
+    capital[4] = (data['Património'].values[2] * months + data['Património'].values[2] * 12 * years).toFixed(2);
+    setCapitalVals({
+      labels: ["Ganho", "Gasto", "Investido", "Poupado", "De Emergência"],
+      datasets: [
+        {
+          label: "",
+          data: capital,
+          hoverBackgroundColor: new Array(5).fill('transparent'),
+          hoverBorderWidth: 4,
+          borderColor: color
+        }
+      ]
+    })
+  }, [data, months, years, theme])
 
   useEffect(() => {
     let newDataVals = {
@@ -144,7 +197,7 @@ function App() {
               <Col xs="12" sm="12" md="12" lg="4" style={{ paddingTop: 0, textAlign: "center" }}>
                 {dataVals &&
                   <>
-                    <Doughnut plugins={[ChartDataLabels]} options={chartOptions} data={dataVals} style={{ maxHeight: 356.5, textAlign: "center", paddingTop: 15 }} />
+                    <Pie plugins={[ChartDataLabels]} options={pieChartOptions} data={dataVals} style={{ maxHeight: 356.5, textAlign: "center", paddingTop: 15 }} />
                   </>
                 }
                 <h6 style={{ paddingTop: 10 }} id={theme}>
@@ -173,7 +226,7 @@ function App() {
             <div id={theme} style={{width: '100%'}}>
               <h4>
                 Capital após <InputNumber
-                  style={{ width: 70, maxHeight: 38, borderRadius: '10%', textAlign: 'center', border: '2px solid black' }}
+                  style={{ width: (months.toFixed(0).length)*17, textAlign: 'center', border: 'none'}}
                   min={0}
                   value={months}
                   max={100000}
@@ -181,83 +234,26 @@ function App() {
                   onChange={(value) => changeMonths(value)}
                   enableMobileNumericKeyboard
                 /> {wordMonths} e <InputNumber
-                  style={{ width: 70, maxHeight: 38, borderRadius: '10%', textAlign: 'center', border: '2px solid black' }}
+                  style={{ width: (years.toFixed(0).length)*17, textAlign: 'center', border: 'none'}}
                   min={0}
                   value={years}
                   max={99}
                   step={1}
                   onChange={(value) => changeYears(value)}
                   enableMobileNumericKeyboard
-                /> {wordYears}:
+                /> {wordYears}
+                <Tooltip title="Edita o número de meses e anos">
+                <IconButton>
+                  <InfoIcon />
+                </IconButton>
+              </Tooltip>
               </h4>
               <Row>
-                <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h5>Ganho</h5>
-                  <GaugeChart
-                    colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
-                      "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
-                    needleColor={'rgba(54, 162, 235, .5)'}
-                    needleBaseColor={'rgba(54, 162, 235, 1)'}
-                    textColor={theme === "light" ? 'black' : 'white'}
-                    nrOfLevels={5}
-                    percent={(won / (won+savings+investments+expenses+emergency))}
-                    formatTextValue={() => { return won.toFixed(2) + ' €'}}
-                  />
-                </Col>
-                <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h5>Poupado</h5>
-                  <GaugeChart
-                    colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
-                      "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
-                    needleColor={'rgba(54, 162, 235, .5)'}
-                    needleBaseColor={'rgba(54, 162, 235, 1)'}
-                    textColor={theme === "light" ? 'black' : 'white'}
-                    nrOfLevels={5}
-                    percent={(savings / (won+savings+investments+expenses+emergency))}
-                    formatTextValue={() => { return savings.toFixed(2) + ' €'}}
-                  />
-                </Col>
-                <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h5>Investido</h5>
-                  <GaugeChart
-                    colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
-                      "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
-                    needleColor={'rgba(54, 162, 235, .5)'}
-                    needleBaseColor={'rgba(54, 162, 235, 1)'}
-                    textColor={theme === "light" ? 'black' : 'white'}
-                    nrOfLevels={5}
-                    percent={(investments / (won+savings+investments+expenses+emergency))}
-                    formatTextValue={() => { return investments.toFixed(2) + ' €'}}
-                  />
-                </Col>
-                <Col xs="0" sm="0" md="2" lg="2" id="hideCol"></Col>
-                <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h5>Gasto</h5>
-                  <GaugeChart
-                    colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
-                      "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
-                    needleColor={'rgba(54, 162, 235, .5)'}
-                    needleBaseColor={'rgba(54, 162, 235, 1)'}
-                    textColor={theme === "light" ? 'black' : 'white'}
-                    nrOfLevels={5}
-                    percent={(expenses / (won+savings+investments+expenses+emergency))}
-                    formatTextValue={() => { return expenses.toFixed(2) + ' €'}}
-                  />
-                </Col>
-                <Col xs="0" sm="3" md="0" lg="0" id="showCol"></Col>
-                <Col xs="12" sm="6" md="4" lg="4" style={{ paddingTop: 20 }}>
-                  <h5>De Emergência</h5>
-                  <GaugeChart
-                    colors={["rgba(0, 255, 0, 0.8)", "rgba(128, 255, 0, 0.8)",
-                      "rgba(255, 255, 0, 0.8)", "rgba(255, 128, 0, 0.8)", "rgba(255, 0, 0, 0.8)"]}
-                    needleColor={'rgba(54, 162, 235, .5)'}
-                    needleBaseColor={'rgba(54, 162, 235, 1)'}
-                    textColor={theme === "light" ? 'black' : 'white'}
-                    nrOfLevels={5}
-                    percent={(emergency / (won+savings+investments+expenses+emergency))}
-                    formatTextValue={() => { return emergency.toFixed(2) + ' €'}}
-                  />
-                </Col>
+                { dataVals &&
+                  <>
+                    <Bar plugins={[ChartDataLabels]} options={barChartOptions} data={capitalVals} style={{ maxHeight: 356.5, textAlign: "center", paddingTop: 15 }} />
+                  </>
+                }
               </Row>
             </div>
             <br />

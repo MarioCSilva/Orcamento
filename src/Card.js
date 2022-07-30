@@ -32,7 +32,7 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
         </Card.Title>
 
           <Table responsive style={{verticalAlign: 'middle', marginBottom: 0}}>
-          <tbody style={{fontSize: 14}}>
+          <tbody style={{fontSize: 13}}>
                 {cardTable.map((option, index) => (
                   
                   <tr  key={index}>
