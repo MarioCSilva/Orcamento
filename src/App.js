@@ -228,7 +228,7 @@ function App() {
             <div id={theme} style={{width: '100%'}}>
               <h4 style={{fontWeight: '900'}}>
                 Capital após <InputNumber
-                  style={{ fontWeight: 900, width: (months.toFixed(0).length)*15, paddingLeft: 1, paddingRight: 1, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
+                  style={{ fontWeight: 900, width: (months.toFixed(0).length)*18, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
                   min={0}
                   value={months}
                   max={100000}
@@ -236,7 +236,7 @@ function App() {
                   onChange={(value) => changeMonths(value)}
                   enableMobileNumericKeyboard
                 /> {wordMonths} e <InputNumber
-                  style={{ fontWeight: 900, width: (years.toFixed(0).length)*15, paddingLeft: 1, paddingRight: 1, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
+                  style={{ fontWeight: 900, width: (years.toFixed(0).length)*18, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
                   min={0}
                   value={years}
                   max={99}
