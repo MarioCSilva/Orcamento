@@ -15,7 +15,7 @@
 
 #light {
   background-color: white;
-  color: black;
+  color: #23272a;
 }
 
 #light .text {
@@ -24,7 +24,12 @@
 }
 
 #dark {
-  background-color: #282c34;
+  background-color: #36393E;
+}
+
+#dark .text {
+  background-color: #36393E;
+  color: #23272a;
 }
 
 .App-header {

@@ -76,7 +76,7 @@ function App() {
     plugins: {
       legend: {
         labels: {
-          color: theme === 'light' ? 'black' : 'white'
+          color: theme === 'light' ? '#23272a' : 'white'
         }
       },
       datalabels: {
@@ -98,12 +98,12 @@ function App() {
     scales: {
       yAxes:{
           ticks:{
-              color: theme === 'light' ? 'black' : 'white'
+              color: theme === 'light' ? '#23272a' : 'white'
           }
       },
       xAxes: {
           ticks:{
-              color: theme === 'light' ? 'black' : 'white'
+              color: theme === 'light' ? '#23272a' : 'white'
           }
       },
     },
@@ -112,7 +112,7 @@ function App() {
         display: false,
       },
       datalabels: {
-        color: theme === 'light' ? 'black' : 'white',
+        color: theme === 'light' ? '#23272a' : 'white',
         font: {
           weight: "bold",
           size: 16
@@ -126,7 +126,7 @@ function App() {
   }
 
   useEffect(() => {
-    var color = theme === 'light' ? 'black' : 'white';
+    var color = theme === 'light' ? '#e5e5e5' : '#6c757d';
     var capital = [];
     capital[0] = (data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years).toFixed(2);
     var expenses = data['Casa']['total'] + data['Familiar']['total'] + data['Transportes']['total'] + data['Extras']['total'];
@@ -140,8 +140,9 @@ function App() {
         {
           label: "",
           data: capital,
+          backgroundColor: color,
           hoverBackgroundColor: new Array(5).fill('transparent'),
-          hoverBorderWidth: 4,
+          hoverBorderWidth: 7,
           borderColor: color
         }
       ]
@@ -178,7 +179,7 @@ function App() {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" style={{ width: '100%', paddingTop: 20, overflowX: 'hidden' }} id={theme}>
         <header className="App-header">
-          <h1 id={theme} style={{ fontWeight: 'bold', flex: "1", width: '100%' }}>Orçamento</h1>
+          <h1 id={theme} style={{ fontWeight: '900', flex: "1", width: '100%'}}>ORÇAMENTO</h1>
           <div style={{ position: 'absolute', top: 18, right: 20 }}>
             <DarkModeSwitch
               checked={isDarkMode}
@@ -193,19 +194,20 @@ function App() {
               </Col>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
                 <BasicCard id="Património" cardTitle="Património" cardTable={["Investimentos", "Poupança", "Reserva de emergência"]} />
+                <div style={{border: '2px solid #d2d2d2', borderRadius: '5px', marginTop: '20px', height: 95, background: 'white'}}>
+                  <h6 style={{ fontWeight: 500, paddingTop: 24, background: 'transparent', height: '100%', color: 'black'}}>
+                    Orçamento Zero ?
+                    <br/>
+                    {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{ background: '#0d6efdA0', paddingLeft: 3, paddingRight: 3, borderRadius: '5%', fontWeight: 'bold' }}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
+                  </h6>
+                </div>
               </Col>
               <Col xs="12" sm="12" md="12" lg="4" style={{ paddingTop: 0, textAlign: "center" }}>
                 {dataVals &&
                   <>
-                    <Pie plugins={[ChartDataLabels]} options={pieChartOptions} data={dataVals} style={{ maxHeight: 356.5, textAlign: "center", paddingTop: 15 }} />
+                    <Pie plugins={[ChartDataLabels]} options={pieChartOptions} data={dataVals} style={{ maxHeight: 330, textAlign: "center", paddingTop: 15 }} />
                   </>
                 }
-                <h6 style={{ paddingTop: 10 }} id={theme}>
-                  Orçamento Zero ?
-                </h6>
-                <h6 id={theme}>
-                  {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{ background: '#0d6efdA0', paddingLeft: 3, paddingRight: 3, borderRadius: '5%', fontWeight: 'bold' }}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
-                </h6>
               </Col>
             </Row>
             <Row>
@@ -224,9 +226,9 @@ function App() {
             </Row>
             <br />
             <div id={theme} style={{width: '100%'}}>
-              <h4>
+              <h4 style={{fontWeight: '900'}}>
                 Capital após <InputNumber
-                  style={{ width: (months.toFixed(0).length)*17, textAlign: 'center', border: 'none'}}
+                  style={{ fontWeight: 900, width: (months.toFixed(0).length)*15, paddingLeft: 1, paddingRight: 1, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
                   min={0}
                   value={months}
                   max={100000}
@@ -234,7 +236,7 @@ function App() {
                   onChange={(value) => changeMonths(value)}
                   enableMobileNumericKeyboard
                 /> {wordMonths} e <InputNumber
-                  style={{ width: (years.toFixed(0).length)*17, textAlign: 'center', border: 'none'}}
+                  style={{ fontWeight: 900, width: (years.toFixed(0).length)*15, paddingLeft: 1, paddingRight: 1, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
                   min={0}
                   value={years}
                   max={99}
@@ -242,9 +244,9 @@ function App() {
                   onChange={(value) => changeYears(value)}
                   enableMobileNumericKeyboard
                 /> {wordYears}
-                <Tooltip title="Edita o número de meses e anos">
-                <IconButton>
-                  <InfoIcon />
+                <Tooltip title="Edita o número de meses e anos!">
+                <IconButton style={{marginBottom: 5}}>
+                  <InfoIcon style={{color: theme === 'light' ? '#23272a': 'white'}}/>
                 </IconButton>
               </Tooltip>
               </h4>

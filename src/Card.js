@@ -27,7 +27,7 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
   return (
     <Card style={{background: background, width: '100%', backgroundClip: 'padding-box'}}>
       <Card.Body style={{paddingBottom: 0, paddingTop: 8, paddingLeft: 8, paddingRight: 8}}>
-        <Card.Title style={{color: 'black'}}>
+        <Card.Title style={{textTransform: 'uppercase', fontWeight: 'bold', textDecorationLine: 'underline', color: valuesStore.getState().data[id] ? valuesStore.getState().data[id].color : '#23272a'}}>
           {title}
         </Card.Title>
 
@@ -41,7 +41,7 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
                     </td>
                     <td style={{textAlign: 'right', width: 120}}>
                       <InputNumber
-                        style={{width: 80, textAlign: 'right'}}
+                        style={{width: 80, textAlign: 'right', border: 'none'}}
                         min={0}
                         max={1000000000000}
                         value={data[id] ? data[id]['values'][index] : 0}

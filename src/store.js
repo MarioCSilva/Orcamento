@@ -8,7 +8,6 @@ const colors = {
   'Familiar': "#52D726",
   'Transportes': "#FF7300",
   'Extras': "#47B39C",
-  
 }
 
 
