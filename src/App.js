@@ -245,7 +245,7 @@ function App() {
                   enableMobileNumericKeyboard
                 /> {wordYears}
                 <Tooltip title="Edita o número de meses e anos!">
-                <IconButton style={{marginBottom: 5}}>
+                <IconButton style={{marginBottom: 5, cursor: 'default'}}>
                   <InfoIcon style={{color: theme === 'light' ? '#23272a': 'white'}}/>
                 </IconButton>
               </Tooltip>
