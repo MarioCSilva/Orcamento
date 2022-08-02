@@ -9,6 +9,8 @@ import InputNumber from 'react-input-number';
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
 import "chartjs-plugin-datalabels";
 import 'chart.js/auto';
 import './App.css';
@@ -141,7 +143,7 @@ function App() {
           label: "",
           data: capital,
           backgroundColor: color,
-          hoverBackgroundColor: new Array(5).fill('transparent'),
+          hoverBorderColor: new Array(5).fill('transparent'),
           hoverBorderWidth: 7,
           borderColor: color
         }
@@ -157,10 +159,11 @@ function App() {
           label: "Orçamento",
           data: [],
           backgroundColor: [],
-          hoverBackgroundColor: [],
+          hoverBorderColor: [],
+          borderColor: [],
           borderWidth: 0.5,
-          hoverBorderWidth: 4,
-          hoverOffset: 2
+          hoverBorderWidth: 1,
+          hoverOffset: 0
         }
       ]
     }
@@ -169,17 +172,18 @@ function App() {
         newDataVals.labels.push(key);
         newDataVals.datasets[0].data.push(value['total']);
         newDataVals.datasets[0].backgroundColor.push(value['color']);
-        newDataVals.datasets[0].hoverBackgroundColor.push(value['color']);
+        newDataVals.datasets[0].borderColor.push(value['color']);
+        newDataVals.datasets[0].hoverBorderColor.push(theme === 'light' ? 'rgb(35, 39, 42)' : 'white');
       }
     }
     setDataVals(newDataVals);
-  }, [data])
+  }, [data, theme])
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" style={{ width: '100%', paddingTop: 20, overflowX: 'hidden' }} id={theme}>
         <header className="App-header">
-          <h1 id={theme} style={{ fontWeight: '900', flex: "1", width: '100%'}}>ORÇAMENTO</h1>
+          <h2 id={theme} style={{ fontWeight: '900', flex: "1", width: '100%'}}>ORÇAMENTO</h2>
           <div style={{ position: 'absolute', top: 18, right: 20 }}>
             <DarkModeSwitch
               checked={isDarkMode}
@@ -190,15 +194,20 @@ function App() {
           <Container>
             <Row style={{ paddingTop: 10 }}>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
-                <BasicCard id="Rendimentos" cardTitle="Rendimentos" background="linear-gradient(180deg, white 87.5%, rgba(54,162,235,0.8))" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
+                <BasicCard id="Rendimentos" cardTitle="Rendimentos" background="linear-gradient(180deg, white 86.5%, rgb(155 215 255))" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
               </Col>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
                 <BasicCard id="Património" cardTitle="Património" cardTable={["Investimentos", "Poupança", "Reserva de emergência"]} />
-                <div style={{border: '2px solid #d2d2d2', borderRadius: '5px', marginTop: '20px', height: 95, background: 'white'}}>
+                <div style={{border: '2px solid #d2d2d2', borderRadius: '5px', marginTop: '20px', height: 95, background: 'white', boxShadow: theme === 'light' ? '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)' : '0 6px 10px rgba(255,255,255,.08), 0 0 6px rgba(255,255,255,.05)'}}>
                   <h6 style={{ fontWeight: 500, paddingTop: 24, background: 'transparent', height: '100%', color: 'black'}}>
-                    Orçamento Zero ?
+                    Orçamento Zero
+                    {
+                      data['Rendimentos']['total'].toFixed(2) - totalSpent.toFixed(2) === 0 ?
+                        <DoneIcon style={{color: '#4BB543', paddingBottom: 5}}/> :
+                        <ClearIcon style={{color: 'red', paddingBottom: 5}}/>
+                    }
                     <br/>
-                    {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{ background: '#0d6efdA0', paddingLeft: 3, paddingRight: 3, borderRadius: '5%', fontWeight: 'bold' }}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
+                    {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{paddingLeft: 3, paddingRight: 3, borderRadius: '5%', fontWeight: '900' }}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
                   </h6>
                 </div>
               </Col>
@@ -228,7 +237,7 @@ function App() {
             <div id={theme} style={{width: '100%'}}>
               <h4 style={{fontWeight: '900'}}>
                 Capital após <InputNumber
-                  style={{ fontWeight: 900, width: (months.toFixed(0).length)*18, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
+                  style={{ fontWeight: 900, width: (months.toFixed(0).length)*20, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
                   min={0}
                   value={months}
                   max={100000}
@@ -236,7 +245,7 @@ function App() {
                   onChange={(value) => changeMonths(value)}
                   enableMobileNumericKeyboard
                 /> {wordMonths} e <InputNumber
-                  style={{ fontWeight: 900, width: (years.toFixed(0).length)*18, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
+                  style={{ fontWeight: 900, width: (years.toFixed(0).length)*20, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
                   min={0}
                   value={years}
                   max={99}
@@ -245,7 +254,7 @@ function App() {
                   enableMobileNumericKeyboard
                 /> {wordYears}
                 <Tooltip title="Edita o número de meses e anos!">
-                <IconButton style={{marginBottom: 5, cursor: 'default'}}>
+                <IconButton style={{marginBottom: 5, cursor: 'default', marginLeft: 5}}>
                   <InfoIcon style={{color: theme === 'light' ? '#23272a': 'white'}}/>
                 </IconButton>
               </Tooltip>

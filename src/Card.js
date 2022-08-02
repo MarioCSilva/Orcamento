@@ -6,6 +6,7 @@ import valuesStore from './store.js'
 
 const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"] }) => {
   const [title, ] = useState(cardTitle);
+  const theme = valuesStore(state => state.theme);
   const [counts, setCounts] = useState([]);
   let data = valuesStore(state => state.data);
 
@@ -25,9 +26,11 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
   }  
 
   return (
-    <Card style={{background: background, width: '100%', backgroundClip: 'padding-box'}}>
+    <Card style={{ background: background, width: '100%', backgroundClip: 'padding-box',
+      boxShadow: theme === 'light' ? '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)' : '0 6px 10px rgba(255,255,255,.08), 0 0 6px rgba(255,255,255,.05)'
+    }}>
       <Card.Body style={{paddingBottom: 0, paddingTop: 8, paddingLeft: 8, paddingRight: 8}}>
-        <Card.Title style={{textTransform: 'uppercase', fontWeight: 'bold', textDecorationLine: 'underline', color: valuesStore.getState().data[id] ? valuesStore.getState().data[id].color : '#23272a'}}>
+        <Card.Title style={{textTransform: 'uppercase', fontWeight: 'bold', color: '#23272a'}}>
           {title}
         </Card.Title>
 
