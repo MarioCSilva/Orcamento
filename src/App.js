@@ -23,8 +23,9 @@ var getTotal = function (dataVals, value) {
     (a, b) => a + b,
     0
   );
-
-  return (value / sum * 100).toFixed(0);
+  if ((value / sum * 100).toFixed(0) !== '0')
+    return (value / sum * 100).toFixed(0) + "%";
+  return null
 };
 
 function App() {
@@ -89,7 +90,7 @@ function App() {
         },
         padding: 6,
         formatter: (value) => {
-          return getTotal(dataVals, value) + "%";
+          return getTotal(dataVals, value);
         }
       }
     },
@@ -121,7 +122,7 @@ function App() {
         },
         padding: 6,
         formatter: (value) => {
-          return parseFloat(value).toFixed(0) + " €";
+          return parseFloat(value).toFixed(0) !== '0' ? parseFloat(value).toFixed(0) + " €" : null;
         },
       }
     },
@@ -130,12 +131,14 @@ function App() {
   useEffect(() => {
     var color = theme === 'light' ? '#e5e5e5' : '#6c757d';
     var capital = [];
-    capital[0] = (data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years).toFixed(2);
-    var expenses = data['Casa']['total'] + data['Familiar']['total'] + data['Transportes']['total'] + data['Extras']['total'];
-    capital[1] = (expenses * months + expenses * 12 * years).toFixed(2);
-    capital[2] = (data['Património'].values[0] * months + data['Património'].values[0] * 12 * years).toFixed(2);
-    capital[3] = (data['Património'].values[1] * months + data['Património'].values[1] * 12 * years).toFixed(2);
-    capital[4] = (data['Património'].values[2] * months + data['Património'].values[2] * 12 * years).toFixed(2);
+    if (data['Rendimentos'] && data['Casa'] && data['Património']) {
+      capital[0] = (data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years).toFixed(2);
+      var expenses = data['Casa']['total'] + data['Familiar']['total'] + data['Transportes']['total'] + data['Extras']['total'];
+      capital[1] = (expenses * months + expenses * 12 * years).toFixed(2);
+      capital[2] = (data['Património'].values[0] * months + data['Património'].values[0] * 12 * years).toFixed(2);
+      capital[3] = (data['Património'].values[1] * months + data['Património'].values[1] * 12 * years).toFixed(2);
+      capital[4] = (data['Património'].values[2] * months + data['Património'].values[2] * 12 * years).toFixed(2);
+    }
     setCapitalVals({
       labels: ["Ganho", "Gasto", "Investido", "Poupado", "De Emergência"],
       datasets: [
@@ -197,13 +200,19 @@ function App() {
               </Col>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
                 <BasicCard id="Património" cardTitle="Património" cardTable={["Investimentos", "Poupança", "Reserva de emergência"]} />
-                <div style={{border: '2px solid #d2d2d2', borderRadius: '5px', marginTop: '20px', height: 95, background: 'white', boxShadow: theme === 'light' ? '0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05)' : '0 6px 10px rgba(255,255,255,.08), 0 0 6px rgba(255,255,255,.05)'}}>
-                  <h6 style={{ fontWeight: 500, paddingTop: 24, background: 'transparent', height: '100%', color: 'black'}}>
+                <div style={{borderRadius: '5px', marginTop: '20px', height: 95, 
+                  boxShadow: theme === 'light' ?
+                  '0 0px 10px rgba(108, 117, 125,.08), 0 0 6px rgba(108, 117, 125,.05)' :
+                  '0 0px 10px rgba(248, 249, 250,.08), 0 0 6px rgba(248, 249, 250,.05)',
+                  border: theme !== 'light' ? '#f8f9fa' : '#212529',
+                  background: theme === 'light' ? '#f8f9fa' : '#6c757d'
+                }}>
+                  <h6 style={{ fontWeight: 500, paddingTop: 24, background: 'transparent', height: '100%',  color: theme !== 'light' ? 'white' : '#23272a'}}>
                     Orçamento Zero
                     {
                       data['Rendimentos']['total'].toFixed(2) - totalSpent.toFixed(2) === 0 ?
-                        <DoneIcon style={{color: '#4BB543', paddingBottom: 5}}/> :
-                        <ClearIcon style={{color: 'red', paddingBottom: 5}}/>
+                        <DoneIcon style={{color: theme === 'light' ? '#141619' : 'white', paddingBottom: 5}}/> :
+                        <ClearIcon style={{color: theme !== 'light' ? 'white' : '#141619', paddingBottom: 5}}/>
                     }
                     <br/>
                     {data['Rendimentos']['total'].toFixed(2)} € - {totalSpent.toFixed(2)} € = <span style={{paddingLeft: 3, paddingRight: 3, borderRadius: '5%', fontWeight: '900' }}>{(data['Rendimentos']['total'] - totalSpent).toFixed(2)} €</span>
