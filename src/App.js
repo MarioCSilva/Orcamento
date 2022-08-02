@@ -82,7 +82,7 @@ function App() {
         }
       },
       datalabels: {
-        color: "white",
+        color: theme === 'light' ? '#23272a' : 'white',
         font: {
           weight: "bold",
           size: 16
@@ -143,9 +143,8 @@ function App() {
           label: "",
           data: capital,
           backgroundColor: color,
-          hoverBorderColor: new Array(5).fill('transparent'),
+          hoverBorderColor: new Array(5).fill(color),
           hoverBorderWidth: 7,
-          borderColor: color
         }
       ]
     })
