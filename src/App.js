@@ -129,7 +129,7 @@ function App() {
   }
 
   useEffect(() => {
-    var color = theme === 'light' ? '#e5e5e5' : '#6c757d';
+    var color = theme === 'light' ? '#f8f9fa' : '#6c757d';
     var capital = [];
     if (data['Rendimentos'] && data['Casa'] && data['Património']) {
       capital[0] = (data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years).toFixed(2);

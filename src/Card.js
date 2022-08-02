@@ -49,7 +49,8 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
                     </td>
                     <td style={{textAlign: 'right', width: 120}}>
                       <InputNumber
-                        style={{color: theme !== 'light' ? 'white' : '#23272a', width: 80, textAlign: 'right', border: theme === 'light' ? '1px solid #dee2e6' : '1px solid gray', borderRadius: 4, height: 22, background: theme === 'light' ? '#f8f9fa' : '#6c757d'}}
+                        style={{color: theme !== 'light' ? 'white' : '#23272a', width: 80, textAlign: 'right', border: theme === 'light' ? '1px solid #dee2e6' : '1px solid gray', borderRadius: 4, height: 22,
+                          background: theme === 'light' ? '#f8f9fa' : '#6c757d'}}
                         min={0}
                         max={1000000000000}
                         value={counts[index]}
