@@ -185,16 +185,22 @@ function App() {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" style={{ width: '100%', paddingTop: 20, overflowX: 'hidden' }} id={theme}>
         <header className="App-header">
-          <h2 id={theme} style={{ fontWeight: '900', flex: "1", width: '100%'}}>ORÇAMENTO</h2>
-          <div style={{ position: 'absolute', top: 18, right: 20 }}>
-            <DarkModeSwitch
-              checked={isDarkMode}
-              onChange={toggleTheme}
-              size={40}
-            />
-          </div>
           <Container>
-            <Row style={{ paddingTop: 10 }}>
+            <Row>
+              <Col md="4"></Col>
+              <Col md="4">
+                <h2 id={theme} style={{ fontWeight: '900', width: '100%'}}>ORÇAMENTO</h2>
+              </Col>
+              <Col md="4">
+                <DarkModeSwitch
+                  style={{float: 'right'}}
+                  checked={isDarkMode}
+                  onChange={toggleTheme}
+                  size={40}
+                />
+              </Col>
+            </Row>
+            <Row>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
                 <BasicCard id="Rendimentos" cardTitle="Rendimentos" background="linear-gradient(180deg, white 86.5%, rgb(155 215 255))" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
               </Col>
@@ -241,8 +247,7 @@ function App() {
                 <BasicCard id="Extras" cardTitle="Extras" cardTable={["Dívidas (cartões de crédito)", "Crédito Pessoal", "Outros créditos", "Restaurantes / bares / cafés", "Subscrições", "Livros  e workshops", "Reparações / arranjos", "Utensílios", "Férias", "Multas"]} />
               </Col>
             </Row>
-            <br />
-            <div id={theme} style={{width: '100%'}}>
+            <div id={theme} style={{width: '100%', paddingTop: 30}}>
               <h4 style={{fontWeight: '900'}}>
                 Capital após <InputNumber
                   style={{ fontWeight: 900, width: (months.toFixed(0).length)*20, textAlign: 'center', border: 'none', background: 'transparent', color: theme === 'light' ? '#23272a': 'white'}}
