@@ -8,9 +8,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import InputNumber from 'react-input-number';
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import InfoIcon from "@material-ui/icons/Info";
-import DoneIcon from '@material-ui/icons/Done';
-import ClearIcon from '@material-ui/icons/Clear';
+import { Icon } from "@material-ui/core"
 import Pdf from "react-to-pdf";
 import "chartjs-plugin-datalabels";
 import 'chart.js/auto';
@@ -19,36 +17,50 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const ThemeContext = createContext(null);
 const ref = createRef();
-const options = {
-  orientation: 'portrait',
-  unit: 'in',
-  format: [13.75, 14.7]
-};
+
+
 
 var getTotal = function (dataVals, value) {
   var sum = dataVals.datasets[0].data.reduce(
     (a, b) => a + b,
     0
-  );
-  if ((value / sum * 100).toFixed(0) !== '0')
+    );
+    if ((value / sum * 100).toFixed(0) !== '0')
     return (value / sum * 100).toFixed(0) + "%";
-  return null
-};
+    return null
+  };
+  
+  function App() {
+    const [dataVals, setDataVals] = useState(null);
+    const [capitalVals, setCapitalVals] = useState(null)
+    const [wordMonths, setWordMonths] = useState("Meses");
+    const [wordYears, setWordYears] = useState("Anos");
+    const years = valuesStore(state => state.years);
+    const months = valuesStore(state => state.months);
+    const data = valuesStore(state => state.data);
+    const totalSpent = valuesStore(state => state.totalSpent);
+    const theme = valuesStore(state => state.theme);
+    const [isDarkMode, setDarkMode] = useState(theme === "dark" ? true : false);
+    
+    const InfoIcon = () => (
+      <Icon>
+          <img alt={''} src={theme !== "light" ? require('./info-light.png') : require('./info.png')} style={{width: 20, height: 20}} id={theme}/>
+      </Icon>
+    )
+    
+    const DoneIcon = () => (
+      <Icon>
+          <img alt={''} src={theme !== "light" ? require('./done-light.png') : require('./done.png')} style={{width: 20, height: 20}}/>
+      </Icon>
+    )
+    
+    const ClearIcon = () => (
+      <Icon>
+          <img alt={''} src={theme !== "light" ? require('./clear-light.png') : require('./clear.png')} style={{width: 20, height: 20}}/>
+      </Icon>
+    )
 
-function App() {
-  const [dataVals, setDataVals] = useState(null);
-  const [capitalVals, setCapitalVals] = useState(null)
-  const [wordMonths, setWordMonths] = useState("Meses");
-  const [wordYears, setWordYears] = useState("Anos");
-  const years = valuesStore(state => state.years);
-  const months = valuesStore(state => state.months);
-  const data = valuesStore(state => state.data);
-  const totalSpent = valuesStore(state => state.totalSpent);
-  const theme = valuesStore(state => state.theme);
-  const [isDarkMode, setDarkMode] = useState(theme === "dark" ? true : false);
-
-
-  useEffect(()=>{
+    useEffect(()=>{
     if (parseFloat(years) === parseFloat(1))
       setWordYears("Ano")
     else
@@ -188,6 +200,33 @@ function App() {
     setDataVals(newDataVals);
   }, [data, theme])
 
+  const [options, setOptions] = useState({
+    unit: 'in',
+    format: [
+      (ref.current ? ref.current.offsetWidth : window.innerWidth) / 96,
+      (ref.current ? ref.current.offsetHeight : window.innerHeight) / 96
+    ]
+  });
+
+  const handleResize = () => {
+    setOptions({
+      unit: 'in',
+      format: [
+        (ref.current ? ref.current.offsetWidth : window.innerWidth) / 96,
+        (ref.current ? ref.current.offsetHeight : window.innerHeight) / 96
+      ]
+    })
+  }
+
+  useEffect(() => {
+    console.log(options.format)
+  }, [options])
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+  }, []);
+
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="App" style={{ width: '100%', overflowX: 'hidden' }} id={theme}>
@@ -195,7 +234,7 @@ function App() {
           <Container ref={ref} id={theme} style={{paddingTop: 20}}>
             <Row>
               <Col xs="3" sm="4">
-                <Pdf targetRef={ref} filename="code-example.pdf" options={options} scale={1}>
+                <Pdf targetRef={ref} filename="orcamento.pdf" options={options} scale={1}>
                   {({ toPdf }) => <Button variant={theme} onClick={toPdf} style={{fontWeight: 600, fontSize: '.75rem', float: 'left'}}>PDF</Button>}
                 </Pdf>
               </Col>
@@ -278,7 +317,7 @@ function App() {
                   enableMobileNumericKeyboard
                 /> {wordYears}
                 <Tooltip title="Edita o número de meses e anos!">
-                <IconButton style={{marginBottom: 5, cursor: 'default', marginLeft: 5}}>
+                <IconButton style={{marginBottom: 9, cursor: 'default', marginLeft: 5}}>
                   <InfoIcon style={{color: theme === 'light' ? '#23272a': 'white'}}/>
                 </IconButton>
               </Tooltip>
