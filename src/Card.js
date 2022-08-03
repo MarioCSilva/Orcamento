@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import InputNumber from 'react-input-number';
 import valuesStore from './store.js'
 
-const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"] }) => {
+const BasicCard = ({ id, cardTitle, cardTable=["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"] }) => {
   const [title, ] = useState(cardTitle);
   const theme = valuesStore(state => state.theme);
   const [counts, setCounts] = useState([]);
@@ -13,19 +13,20 @@ const BasicCard = ({ id, cardTitle, background='white', cardTable=["Salário", "
   useEffect(() => {
     setCounts(new Array(cardTable.length).fill(0));
     valuesStore.getState().create(id, cardTable.length);
-    if (data[id])
-      setCounts(data[id]['values'])
-  }, [data, id, cardTable.length]);
+    if (valuesStore.getState().data[id])
+      setCounts(valuesStore.getState().data[id]['values'])
+  }, [id, cardTable.length]);
+
 
   const changeValue = (index, value) => {
     if (!value || typeof(value) !== 'number' || value < 0 || value >= 10000000) {
       value = 0
     }
-    var copyArr = [...counts];
+    let copyArr = [ ...counts ];
     copyArr[index] = value;
-    setCounts(copyArr);
     valuesStore.getState().update(id, index, value)
-  }  
+    setCounts(valuesStore.getState().data[id]['values'])
+  }
 
   return (
     <Card  bg={ theme === 'light' ? 'light' : 'secondary'} style={{ width: '100%', backgroundClip: 'padding-box',

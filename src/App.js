@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { createContext, useEffect, useState, createRef } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Pie, Bar } from "react-chartjs-2";
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
 import BasicCard from './Card.js';
@@ -11,12 +11,19 @@ import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from "@material-ui/icons/Info";
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
+import Pdf from "react-to-pdf";
 import "chartjs-plugin-datalabels";
 import 'chart.js/auto';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const ThemeContext = createContext(null);
+const ref = createRef();
+const options = {
+  orientation: 'portrait',
+  unit: 'in',
+  format: [13.75, 14.7]
+};
 
 var getTotal = function (dataVals, value) {
   var sum = dataVals.datasets[0].data.reduce(
@@ -183,26 +190,30 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="App" style={{ width: '100%', paddingTop: 20, overflowX: 'hidden' }} id={theme}>
+      <div className="App" style={{ width: '100%', overflowX: 'hidden' }} id={theme}>
         <header className="App-header">
-          <Container>
+          <Container ref={ref} id={theme} style={{paddingTop: 20}}>
             <Row>
-              <Col xs="12" sm="4"></Col>
-              <Col xs="8" sm="4">
+              <Col xs="3" sm="4">
+                <Pdf targetRef={ref} filename="code-example.pdf" options={options} scale={1}>
+                  {({ toPdf }) => <Button variant={theme} onClick={toPdf} style={{fontWeight: 600, fontSize: '.75rem', float: 'left'}}>PDF</Button>}
+                </Pdf>
+              </Col>
+              <Col xs="6" sm="4">
                 <h2 id={theme} style={{ fontWeight: '900', width: '100%'}}>ORÇAMENTO</h2>
               </Col>
-              <Col xs="4" sm="4">
+              <Col xs="3" sm="4">
                 <DarkModeSwitch
-                  style={{float: 'right', marginTop: -7}}
+                  style={{float: 'right'}}
                   checked={isDarkMode}
                   onChange={toggleTheme}
-                  size={40}
+                  size={36}
                 />
               </Col>
             </Row>
             <Row>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
-                <BasicCard id="Rendimentos" cardTitle="Rendimentos" background="linear-gradient(180deg, white 86.5%, rgb(155 215 255))" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
+                <BasicCard id="Rendimentos" cardTitle="Rendimentos" cardTable={["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"]} />
               </Col>
               <Col xs="12" sm="12" md="6" lg="4" style={{ paddingTop: 20 }}>
                 <BasicCard id="Património" cardTitle="Património" cardTable={["Investimentos", "Poupança", "Reserva de emergência"]} />
