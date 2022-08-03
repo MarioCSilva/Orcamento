@@ -187,13 +187,13 @@ function App() {
         <header className="App-header">
           <Container>
             <Row>
-              <Col md="4"></Col>
-              <Col md="4">
+              <Col xs="12" sm="4"></Col>
+              <Col xs="8" sm="4">
                 <h2 id={theme} style={{ fontWeight: '900', width: '100%'}}>ORÇAMENTO</h2>
               </Col>
-              <Col md="4">
+              <Col xs="4" sm="4">
                 <DarkModeSwitch
-                  style={{float: 'right'}}
+                  style={{float: 'right', marginTop: -7}}
                   checked={isDarkMode}
                   onChange={toggleTheme}
                   size={40}
