@@ -7,14 +7,18 @@ import valuesStore from './store.js'
 const BasicCard = ({ id, cardTitle, cardTable=["Salário", "Subsídio de alimentação", "Rendas imobiliárias", "Part-time", "Renda extra", "Pensão / subsídio"] }) => {
   const [title, ] = useState(cardTitle);
   const theme = valuesStore(state => state.theme);
-  const [counts, setCounts] = useState([]);
+  const [counts, setCounts] = useState({});
   let data = valuesStore(state => state.data);
 
   useEffect(() => {
-    setCounts(new Array(cardTable.length).fill(0));
     valuesStore.getState().create(id, cardTable.length);
-    if (valuesStore.getState().data[id])
-      setCounts(valuesStore.getState().data[id]['values'])
+    let new_counts = {};
+    if (valuesStore.getState().data[id]) {
+      for (let i=0; i<cardTable.length; i++) {
+        new_counts[i] = valuesStore.getState().data[id]['values'][i]
+      }
+    }
+    setCounts(new_counts)
   }, [id, cardTable.length]);
 
 
@@ -22,10 +26,11 @@ const BasicCard = ({ id, cardTitle, cardTable=["Salário", "Subsídio de aliment
     if (!value || typeof(value) !== 'number' || value < 0 || value >= 10000000) {
       value = 0
     }
-    let copyArr = [ ...counts ];
-    copyArr[index] = value;
     valuesStore.getState().update(id, index, value)
-    setCounts(valuesStore.getState().data[id]['values'])
+    let copy_counts = { ...counts};
+    copy_counts[index] = value;
+    setCounts(copy_counts)
+    return value;
   }
 
   return (
