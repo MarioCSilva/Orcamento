@@ -1,11 +1,9 @@
 {
   "files": {
     "main.css": "/Orcamento/static/css/main.68808c0f.css",
-    "main.js": "/Orcamento/static/js/main.7ae1a736.js",
-    "static/js/236.72517b85.chunk.js": "/Orcamento/static/js/236.72517b85.chunk.js",
-    "static/js/703.023f6221.chunk.js": "/Orcamento/static/js/703.023f6221.chunk.js",
-    "static/js/513.ec2eb837.chunk.js": "/Orcamento/static/js/513.ec2eb837.chunk.js",
+    "main.js": "/Orcamento/static/js/main.a044204e.js",
     "static/js/787.27fb6eb7.chunk.js": "/Orcamento/static/js/787.27fb6eb7.chunk.js",
+    "static/media/github-light.png": "/Orcamento/static/media/github-light.3ec61b93854178c47369.png",
     "static/media/info-light.png": "/Orcamento/static/media/info-light.42630b18021cf5d28edb.png",
     "static/media/roboto-latin-900italic.woff": "/Orcamento/static/media/roboto-latin-900italic.c20d916c1a1b094c1cec.woff",
     "static/media/roboto-latin-300italic.woff": "/Orcamento/static/media/roboto-latin-300italic.bd5b7a13f2c52b531a2a.woff",
@@ -38,14 +36,11 @@
     "static/media/done.png": "/Orcamento/static/media/done.dcf45cbec49516f1ece4.png",
     "index.html": "/Orcamento/index.html",
     "main.68808c0f.css.map": "/Orcamento/static/css/main.68808c0f.css.map",
-    "main.7ae1a736.js.map": "/Orcamento/static/js/main.7ae1a736.js.map",
-    "236.72517b85.chunk.js.map": "/Orcamento/static/js/236.72517b85.chunk.js.map",
-    "703.023f6221.chunk.js.map": "/Orcamento/static/js/703.023f6221.chunk.js.map",
-    "513.ec2eb837.chunk.js.map": "/Orcamento/static/js/513.ec2eb837.chunk.js.map",
+    "main.a044204e.js.map": "/Orcamento/static/js/main.a044204e.js.map",
     "787.27fb6eb7.chunk.js.map": "/Orcamento/static/js/787.27fb6eb7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.68808c0f.css",
-    "static/js/main.7ae1a736.js"
+    "static/js/main.a044204e.js"
   ]
 }

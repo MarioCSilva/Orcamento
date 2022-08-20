@@ -39,6 +39,12 @@ function App() {
     return null
   };
 
+  const GitHubIcon = () => (
+    <Icon>
+      <img alt="GitHub Repository" title="GitHub Repository" src={theme !== "light" ? require('./github-light.png') : require('./github.png')} style={{ width: 30, height: 30, float: 'left' }} id={theme} />
+    </Icon>
+  )
+
   const InfoIcon = () => (
     <Icon>
       <img alt={''} src={theme !== "light" ? require('./info-light.png') : require('./info.png')} style={{ width: 20, height: 20 }} id={theme} />
@@ -145,7 +151,7 @@ function App() {
   }
 
   useEffect(() => {
-    var color = theme === 'light' ? '#f8f9fa' : '#6c757d';
+    var color = theme === 'light' ? '#6c757d8E' : '#6c757d';
     var capital = [];
     if (data['Rendimentos'] && data['Casa'] && data['Património']) {
       capital[0] = (data['Rendimentos']['total'] * months + data['Rendimentos']['total'] * 12 * years).toFixed(2);
@@ -204,6 +210,9 @@ function App() {
           <Container id={theme} style={{ paddingTop: 20 }}>
             <Row>
               <Col xs="3" sm="4">
+                <a href="https://github.com/MarioCSilva/orcamento">
+                  <GitHubIcon/>
+                </a>
               </Col>
               <Col xs="6" sm="4">
                 <h2 id={theme} style={{ fontWeight: '900', width: '100%' }}>ORÇAMENTO</h2>
@@ -213,7 +222,7 @@ function App() {
                   style={{ float: 'right' }}
                   checked={isDarkMode}
                   onChange={toggleTheme}
-                  size={36}
+                  size={30}
                 />
               </Col>
             </Row>
@@ -225,13 +234,10 @@ function App() {
                 <BasicCard id="Património" cardTitle="Património" cardTable={["Investimentos", "Poupança", "Reserva de emergência"]} />
                 <div style={{
                   borderRadius: '5px', marginTop: '20px', height: 95,
-                  boxShadow: theme === 'light' ?
-                    '0 0px 10px rgba(108, 117, 125,.08), 0 0 6px rgba(108, 117, 125,.05)' :
-                    '0 0px 10px rgba(248, 249, 250,.08), 0 0 6px rgba(248, 249, 250,.05)',
                   border: theme !== 'light' ? '#f8f9fa' : '#212529',
                   background: theme === 'light' ? '#f8f9fa' : '#6c757d'
                 }}>
-                  <h6 style={{ fontWeight: 500, paddingTop: 24, background: 'transparent', height: '100%', color: theme !== 'light' ? 'white' : '#23272a' }}>
+                  <h6 style={{ fontWeight: 500, paddingTop: 20, background: 'transparent', height: '100%', color: theme !== 'light' ? 'white' : '#23272a' }}>
                     Orçamento Zero
                     {
                       data['Rendimentos']['total'].toFixed(2) - totalSpent.toFixed(2) === 0 ?
@@ -285,7 +291,7 @@ function App() {
                   enableMobileNumericKeyboard
                 /> {wordYears}
                 <Tooltip title="Edita o número de meses e anos!">
-                  <IconButton style={{ marginBottom: 9, cursor: 'default', marginLeft: 5 }}>
+                  <IconButton style={{ marginBottom: 9, cursor: 'default', marginLeft: 5, padding: 0 }}>
                     <InfoIcon style={{ color: theme === 'light' ? '#23272a' : 'white' }} />
                   </IconButton>
                 </Tooltip>

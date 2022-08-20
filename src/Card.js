@@ -35,9 +35,6 @@ const BasicCard = ({ id, cardTitle, cardTable=["Salário", "Subsídio de aliment
 
   return (
     <Card  bg={ theme === 'light' ? 'light' : 'secondary'} style={{ width: '100%', backgroundClip: 'padding-box',
-      boxShadow: theme === 'light' ?
-        '0 0px 10px rgba(108, 117, 125,.08), 0 0 6px rgba(108, 117, 125,.05)' :
-        '0 0px 10px rgba(248, 249, 250,.08), 0 0 6px rgba(248, 249, 250,.05)',
       border: theme !== 'light' ? '#f8f9fa' : '#212529'
     }}>
       <Card.Body style={{paddingBottom: 0, paddingTop: 13, paddingLeft: 8, paddingRight: 8}}>
